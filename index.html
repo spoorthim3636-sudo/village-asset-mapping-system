@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Village Asset Mapping System - GIS based community asset management">
+
+    <title>Village Asset Mapping System</title>
+
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIINfQ3E4nN9zv8fY1hGmG7Q8D2E8Z8b0M="
+        crossorigin=""
+    >
+
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                V
+            </div>
+
+            <div>
+                <h2>VillageGIS</h2>
+                <p>Asset Mapping System</p>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="#dashboard" class="nav-link active">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="#map-section" class="nav-link">
+                <span>⌖</span>
+                Village Map
+            </a>
+
+            <a href="#assets-section" class="nav-link">
+                <span>▤</span>
+                Assets
+            </a>
+
+            <a href="#add-asset" class="nav-link">
+                <span>＋</span>
+                Add Asset
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>System Online</strong>
+                    <small>GIS service active</small>
+                </div>
+            </div>
+
+            <p class="copyright">
+                VillageGIS © 2026
+            </p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="welcome">
+                    Community Infrastructure Management
+                </p>
+
+                <h1>
+                    Village Asset Dashboard
+                </h1>
+
+            </div>
+
+
+            <div class="user-profile">
+
+                <div class="user-avatar">
+                    A
+                </div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Manager</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <section id="dashboard">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Overview</h2>
+                    <p>
+                        Current village infrastructure summary
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="statistics">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        ◉
+                    </div>
+
+                    <div>
+                        <span>Total Assets</span>
+                        <h2 id="total-assets">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ♧
+                    </div>
+
+                    <div>
+                        <span>Schools</span>
+                        <h2 id="school-count">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon red">
+                        +
+                    </div>
+
+                    <div>
+                        <span>Health Centres</span>
+                        <h2 id="hospital-count">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        ◇
+                    </div>
+
+                    <div>
+                        <span>Water Facilities</span>
+                        <h2 id="water-count">0</h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= MAP ================= -->
+
+        <section id="map-section" class="content-card">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Village GIS Map</h2>
+
+                    <p>
+                        Explore and locate community assets
+                    </p>
+
+                </div>
+
+
+                <div class="map-controls">
+
+                    <select id="asset-filter">
+
+                        <option value="all">
+                            All Assets
+                        </option>
+
+                        <option value="school">
+                            Schools
+                        </option>
+
+                        <option value="hospital">
+                            Health Centres
+                        </option>
+
+                        <option value="water">
+                            Water Facilities
+                        </option>
+
+                        <option value="government">
+                            Government Buildings
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="map-wrapper">
+
+                <div id="map"></div>
+
+                <div class="map-legend">
+
+                    <strong>Map Legend</strong>
+
+                    <div>
+                        <span class="legend-marker school-marker"></span>
+                        School
+                    </div>
+
+                    <div>
+                        <span class="legend-marker hospital-marker"></span>
+                        Health Centre
+                    </div>
+
+                    <div>
+                        <span class="legend-marker water-marker"></span>
+                        Water Facility
+                    </div>
+
+                    <div>
+                        <span class="legend-marker government-marker"></span>
+                        Government
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= ASSETS ================= -->
+
+        <section id="assets-section" class="content-card">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Community Assets</h2>
+
+                    <p>
+                        Registered infrastructure in the village
+                    </p>
+
+                </div>
+
+
+                <input
+                    type="search"
+                    id="asset-search"
+                    class="search-box"
+                    placeholder="Search assets..."
+                >
+
+            </div>
+
+
+            <div class="asset-table">
+
+                <div class="table-header">
+
+                    <span>Asset Name</span>
+                    <span>Category</span>
+                    <span>Location</span>
+                    <span>Status</span>
+                    <span>Action</span>
+
+                </div>
+
+
+                <div id="asset-list">
+
+                    <!-- JavaScript will insert assets here -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= ADD ASSET ================= -->
+
+        <section id="add-asset" class="content-card">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Add Community Asset</h2>
+
+                    <p>
+                        Register a new asset on the village map
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form id="asset-form">
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="asset-name">
+                            Asset Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="asset-name"
+                            placeholder="Example: Government School"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="asset-type">
+                            Asset Category
+                        </label>
+
+                        <select id="asset-type" required>
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="school">
+                                School
+                            </option>
+
+                            <option value="hospital">
+                                Health Centre
+                            </option>
+
+                            <option value="water">
+                                Water Facility
+                            </option>
+
+                            <option value="government">
+                                Government Building
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="asset-location">
+                            Location Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="asset-location"
+                            placeholder="Example: Main Road"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="asset-status">
+                            Status
+                        </label>
+
+                        <select id="asset-status">
+
+                            <option value="Operational">
+                                Operational
+                            </option>
+
+                            <option value="Under Maintenance">
+                                Under Maintenance
+                            </option>
+
+                            <option value="Inactive">
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="latitude">
+                            Latitude
+                        </label>
+
+                        <input
+                            type="number"
+                            id="latitude"
+                            step="any"
+                            placeholder="12.2958"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="longitude">
+                            Longitude
+                        </label>
+
+                        <input
+                            type="number"
+                            id="longitude"
+                            step="any"
+                            placeholder="76.6394"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    + Add Asset
+                </button>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <p>
+                Village Asset Mapping System
+                • GIS-enabled Community Infrastructure Platform
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <!-- Leaflet JavaScript -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin="">
+    </script>
+
+
+    <!-- Our JavaScript -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
